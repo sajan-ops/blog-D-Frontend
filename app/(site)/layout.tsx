@@ -1,5 +1,4 @@
 "use client";
-
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Lines from "@/components/Lines";
@@ -19,12 +18,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [progress, setProgress] = useState(0)
-  const pathname = usePathname()
+  const [progress, setProgress] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     setProgress(20)
-
     setTimeout(() => {
       setProgress(40)
     }, 100);
@@ -32,9 +30,7 @@ export default function RootLayout({
     setTimeout(() => {
       setProgress(100)
     }, 400);
-
   }, [pathname])
-
 
 
   useEffect(() => {
@@ -42,6 +38,8 @@ export default function RootLayout({
       setProgress(0)
     }, 50);
   }, [])
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`dark:bg-black ${inter.className}`}>

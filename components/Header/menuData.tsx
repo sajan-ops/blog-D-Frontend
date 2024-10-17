@@ -60,12 +60,12 @@ const menuData: Menu[] = [
         newTab: false,
         path: "/support",
       },
-      {
-        id: 36,
-        title: "404",
-        newTab: false,
-        path: "/error",
-      },
+      // {
+      //   id: 36,
+      //   title: "404",
+      //   newTab: false,
+      //   path: "/error",
+      // },
     ],
   },
 
