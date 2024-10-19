@@ -1,19 +1,20 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { signOut, useSession } from "next-auth/react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdownToggler, setDropdownToggler] = useState(false);
+  const [token, settoken] = useState<string | null>(null);
   const [stickyMenu, setStickyMenu] = useState(false);
-
   const pathUrl = usePathname();
-
+  const router = useRouter();
+  const { status } = useSession();
   // Sticky menu
   const handleStickyMenu = () => {
     if (window.scrollY >= 80) {
@@ -23,9 +24,35 @@ const Header = () => {
     }
   };
 
+
+  useEffect(() => {
+    // Check localStorage for token on component mount
+    const userToken = localStorage.getItem('userToken') || sessionStorage.getItem('userToken');
+    settoken(userToken);
+    // Add event listener to re-render on login/logout
+    const handleLoginChange = () => {
+      settoken(localStorage.getItem('userToken') || sessionStorage.getItem('userToken'));
+    };
+    window.addEventListener("loginChange", handleLoginChange);
+    // Clean up event listener
+    return () => {
+      window.removeEventListener("loginChange", handleLoginChange);
+    };
+  }, []);
+
+
   useEffect(() => {
     window.addEventListener("scroll", handleStickyMenu);
   });
+  //  logout
+  const logout = () => {
+    if (status === "authenticated") {
+      signOut();
+    };
+    settoken(null);
+    localStorage.removeItem("userToken");
+    router.push("/auth/signin");
+  }
 
   return (
     <header
@@ -133,12 +160,18 @@ const Header = () => {
 
           <div className="mt-7 flex items-center gap-6 xl:mt-0">
             <ThemeToggler />
-            <Link
+            {token || status === "authenticated" ? <button
+              onClick={logout}
+              className="flex items-center justify-center rounded-full bg-primary px-7.5 py-2.5 text-regular text-white duration-300 ease-in-out hover:bg-primaryho"
+            >
+              Logout
+            </button> : <Link
               href="/auth/signin"
               className="flex items-center justify-center rounded-full bg-primary px-7.5 py-2.5 text-regular text-white duration-300 ease-in-out hover:bg-primaryho"
             >
               Login
-            </Link>
+            </Link>}
+
           </div>
 
         </div>

@@ -1,14 +1,17 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-
+import { useRouter } from 'next/navigation';
 const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navRef = useRef<HTMLDivElement>(null);
-
+    const router = useRouter()
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
-
+    const logout = () => {
+        localStorage.removeItem("adminToken")
+        router.push("/admin")
+    };
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (navRef.current && !navRef.current.contains(event.target as Node) && isOpen) {
@@ -55,7 +58,7 @@ const Sidebar: React.FC = () => {
                     </nav>
                 </div>
                 <div className="p-4">
-                    <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors duration-200">
+                    <button onClick={logout} className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors duration-200">
                         Logout
                     </button>
                 </div>

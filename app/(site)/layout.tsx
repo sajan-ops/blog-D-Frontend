@@ -12,6 +12,7 @@ import ToasterContext from "../context/ToastContext";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import LoadingBar from "react-top-loading-bar";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -43,23 +44,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`dark:bg-black ${inter.className}`}>
-        <LoadingBar
-          color='blue'
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
-        <ThemeProvider
-          enableSystem={false}
-          attribute="class"
-          defaultTheme="light"
-        >
-          <Lines />
-          <Header />
-          <ToasterContext />
-          {children}
-          <Footer />
-          <ScrollToTop />
-        </ThemeProvider>
+        <SessionProvider>
+          <LoadingBar
+            color='blue'
+            progress={progress}
+            onLoaderFinished={() => setProgress(0)}
+          />
+          <ThemeProvider
+            enableSystem={false}
+            attribute="class"
+            defaultTheme="light"
+          >
+            <Lines />
+            <Header />
+            <ToasterContext />
+            {children}
+            <Footer />
+            <ScrollToTop />
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

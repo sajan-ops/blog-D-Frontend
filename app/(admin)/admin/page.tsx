@@ -22,6 +22,7 @@ export default function AdminLogin() {
             } else if (data.message === "successLogin") {
                 toast.dismiss();
                 toast.success("You are logged in.");
+                localStorage.setItem("adminToken", data.token)
                 router.push("/dashboard/home");
             }
         } catch (error) {
