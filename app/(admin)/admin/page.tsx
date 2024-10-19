@@ -24,6 +24,9 @@ export default function AdminLogin() {
                 toast.success("You are logged in.");
                 localStorage.setItem("adminToken", data.token)
                 router.push("/dashboard/home");
+            } else if (data.message === "Wrong Credentials!") {
+                toast.dismiss();
+                toast.error("Wrong Credentials!");
             }
         } catch (error) {
             toast.error("Internal server error.");
