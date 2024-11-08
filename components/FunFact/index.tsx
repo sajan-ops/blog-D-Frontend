@@ -53,7 +53,7 @@ const FunFact = () => {
             whileInView="visible"
             transition={{ duration: 1, delay: 0.1 }}
             viewport={{ once: true }}
-            className="animate_top mx-auto mb-12.5 px-4 text-center md:w-4/5 md:px-0 lg:mb-17.5 lg:w-2/3 xl:w-1/2"
+            className="  mx-auto mb-12.5 px-4 text-center md:w-4/5 md:px-0 lg:mb-17.5 lg:w-2/3 xl:w-1/2"
           >
             <h2 className="mb-4 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle3">
               Trusted by Global Companies.
@@ -82,7 +82,7 @@ const FunFact = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.5 }}
               viewport={{ once: true }}
-              className="animate_top text-center"
+              className="  text-center"
             >
               <h3 className="mb-2.5 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle3">
                 500K
@@ -105,7 +105,7 @@ const FunFact = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.7 }}
               viewport={{ once: true }}
-              className="animate_top text-center"
+              className="  text-center"
             >
               <h3 className="mb-2.5 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle3">
                 1M+
@@ -128,7 +128,7 @@ const FunFact = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.8 }}
               viewport={{ once: true }}
-              className="animate_top text-center"
+              className="  text-center"
             >
               <h3 className="mb-2.5 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle3">
                 865

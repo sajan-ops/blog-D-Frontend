@@ -17,7 +17,7 @@ const menuData: Menu[] = [
     id: 2.1,
     title: "Blog",
     newTab: false,
-    path: "/blog",
+    path: "/blog/all-blogs",
   },
   {
     id: 2.3,
@@ -34,7 +34,7 @@ const menuData: Menu[] = [
         id: 31,
         title: "Blog Grid",
         newTab: false,
-        path: "/blog",
+        path: "/blog/all-blogs",
       },
       {
         id: 34,

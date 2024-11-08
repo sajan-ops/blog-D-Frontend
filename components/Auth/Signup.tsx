@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { signIn, signOut, useSession } from "next-auth/react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -15,12 +16,19 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+
   let { status } = useSession();
   const signupUser = async (e: any) => {
     toast.loading("Processing!")
     e.preventDefault();
+    if (!recaptchaToken) {
+      toast.dismiss()
+      toast.error("Please complete the reCAPTCHA.");
+      return;
+    }
     try {
-      let resp = await axios.post(`${apiUrl}/user/signup`, data);
+      let resp = await axios.post(`${apiUrl}/user/signup`, { ...data, recaptchaToken });
       let userData = resp.data;
       if (userData.status === "userExists") {
         toast.dismiss()
@@ -36,6 +44,9 @@ const Signup = () => {
     } catch (error) {
       console.log("Error", error)
     }
+  }
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
   }
   const signinbyGoogle = () => {
     signIn("google");
@@ -79,7 +90,7 @@ const Signup = () => {
             whileInView="visible"
             transition={{ duration: 1, delay: 0.1 }}
             viewport={{ once: true }}
-            className="animate_top rounded-lg bg-white px-7.5 pt-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:px-15 xl:pt-15"
+            className="  rounded-lg bg-white px-7.5 pt-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:px-15 xl:pt-15"
           >
             <h2 className="mb-15 text-center text-3xl font-semibold text-black dark:text-white xl:text-sectiontitle2">
               Create an Account
@@ -171,7 +182,7 @@ const Signup = () => {
                   </button>}
                 </div>
               </div>
- 
+
               {/* <button
                 aria-label="signup with github"
                 className="text-body-color dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
@@ -269,6 +280,13 @@ const Signup = () => {
         Keep me signed in
       </label>
     </div> */}
+                  {/* reCAPTCHA */}
+                  <div className="my-6 flex justify-center">
+                    <ReCAPTCHA
+                      sitekey={process.env.reCaptuaSiteKey}
+                      onChange={handleRecaptchaChange}
+                    />
+                  </div>
                   <button
                     aria-label="signup with email and password"
                     className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"

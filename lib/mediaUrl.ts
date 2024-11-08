@@ -1,5 +1,5 @@
 import { apiUrl } from "./apiConfig";
 
-export const getMediaUrlPath = (path: any) => {
-    return `${apiUrl}/images/${path}`
+export const getMediaUrlPath = (path: string) => {
+  return `${apiUrl}/images/${path}`;
 };

@@ -1,18 +1,16 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
+import React from "react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-800 text-white py-1 w-full fixed bottom-0">
+    <footer className="fixed bottom-0 w-full bg-gray-800 py-1 text-white">
       <div className="container mx-auto px-4">
         <div className="mb-4 md:mb-0">
-          <p className="text-sm text-center m-auto">
+          <p className="m-auto text-center text-sm">
             © {currentYear} MyAdmin Panel
           </p>
         </div>
-
       </div>
     </footer>
   );

@@ -26,7 +26,7 @@ const Footer = () => {
                 whileInView="visible"
                 transition={{ duration: 1, delay: 0.5 }}
                 viewport={{ once: true }}
-                className="animate_top w-1/2 lg:w-1/4"
+                className="  w-1/2 lg:w-1/4"
               >
                 <a href="/" className="relative">
                   <Image
@@ -77,7 +77,7 @@ const Footer = () => {
                   whileInView="visible"
                   transition={{ duration: 1, delay: 0.1 }}
                   viewport={{ once: true }}
-                  className="animate_top"
+                  className=" "
                 >
                   <h4 className="mb-9 text-itemtitle2 font-medium text-black dark:text-white">
                     Quick Links
@@ -135,7 +135,7 @@ const Footer = () => {
                   whileInView="visible"
                   transition={{ duration: 1, delay: 0.1 }}
                   viewport={{ once: true }}
-                  className="animate_top"
+                  className=" "
                 >
                   <h4 className="mb-9 text-itemtitle2 font-medium text-black dark:text-white">
                     Support
@@ -193,7 +193,7 @@ const Footer = () => {
                   whileInView="visible"
                   transition={{ duration: 1, delay: 0.1 }}
                   viewport={{ once: true }}
-                  className="animate_top"
+                  className=" "
                 >
                   <h4 className="mb-9 text-itemtitle2 font-medium text-black dark:text-white">
                     Newsletter
@@ -261,7 +261,7 @@ const Footer = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top"
+              className=" "
             >
               <ul className="flex items-center gap-8">
                 <li>
@@ -298,7 +298,7 @@ const Footer = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top"
+              className=" "
             >
               <p>
                 &copy; {new Date().getFullYear()} Solid. All rights reserved
@@ -321,7 +321,7 @@ const Footer = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top"
+              className=" "
             >
               <ul className="flex items-center gap-5">
                 <li>

@@ -55,7 +55,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image
@@ -83,7 +83,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             ></motion.div>
 
             <motion.div
@@ -102,7 +102,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image
@@ -130,7 +130,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="h-[11px] w-[11px] rounded-full bg-[#FFDB26]"></div>
             </motion.div>
@@ -151,7 +151,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image
@@ -179,7 +179,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             ></motion.div>
 
             <motion.div
@@ -198,7 +198,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="h-[15px] w-[15px] rounded-full bg-[#62E888]"></div>
             </motion.div>
@@ -219,7 +219,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image
@@ -247,7 +247,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="h-[23px] w-[23px] rounded-full bg-[#EF5C00]"></div>
             </motion.div>
@@ -268,7 +268,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image
@@ -296,7 +296,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="h-[15px] w-[15px] rounded-full bg-[#016BFF]"></div>
             </motion.div>
@@ -317,7 +317,7 @@ const Integration = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_top w-1/6"
+              className="  w-1/6"
             >
               <div className="inline-block rounded-[10px] bg-white p-4.5 shadow-solid-7 dark:bg-btndark">
                 <Image

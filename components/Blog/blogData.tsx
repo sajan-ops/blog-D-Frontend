@@ -1,48 +1,54 @@
-import { Blog } from "@/types/blog";
+// All API CALLS.
 
-const BlogData: Blog[] = [
-  {
-    _id: 1,
-    mainImage: "/images/blog/blog-01.png",
-    title: "Free advertising for your online business",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/blog/blog-02.png",
-    title: "9 simple ways to improve your design skills",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/blog/blog-03.png",
-    title: "Tips to quickly improve your coding speed.",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 1,
-    mainImage: "/images/blog/blog-03.png",
-    title: "Free advertising for your online business",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/blog/blog-04.png",
-    title: "9 simple ways to improve your design skills",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-  {
-    _id: 2,
-    mainImage: "/images/blog/blog-01.png",
-    title: "Tips to quickly improve your coding speed.",
-    metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
-  },
-];
+import { apiUrl } from "@/lib/apiConfig";
+import axios from "axios";
 
-export default BlogData;
+const fetchUsersPosts = async (filter: any, filterType: any) => {
+  try {
+    let type = "instant";
+    const { data } = await axios.get<any>(
+      `${apiUrl}/user/post/getAllposts/${type}?filterType=${filterType}&filter=${filter}`,
+
+    ); // Adjust the URL based on your API
+    // console.log("data>>", data);
+    if (data.success) {
+      return data.rows
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+};
+
+
+const fetchRelatedPosts = async (category: string) => {
+  try {
+    let type = "instant";
+    const { data } = await axios.get<any>(
+      `${apiUrl}/user/post/getRelatedposts/${category}`,
+
+    ); // Adjust the URL based on your API
+    // console.log("data>>", data);
+    if (data.success) {
+      return data.rows
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+};
+
+
+
+const fetchPostDetails = async (slug: any) => {
+  try {
+    const { data } = await axios.get(
+      `${apiUrl}/user/post/getSinglePost/${slug}`
+    );
+    if (data.success) {
+      return data.post
+    }
+  } catch (error) {
+    console.error('Error fetching post details:', error);
+  }
+};
+
+export { fetchUsersPosts, fetchPostDetails, fetchRelatedPosts }
