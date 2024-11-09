@@ -7,12 +7,12 @@ import { apiUrl } from "@/lib/apiConfig";
 // Function to format dates
 const formatDate = (dateString: string) => {
   if (!dateString) return "N/A";
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
@@ -99,7 +99,6 @@ const SubscriptionManagement = () => {
       }
     } catch (error) {
       console.error("Error fetching subscriptions:", error);
-      alert("An error occurred while fetching subscriptions.");
     }
   };
 
@@ -117,11 +116,14 @@ const SubscriptionManagement = () => {
           return;
         }
 
-        const { data } = await axios.get(`${apiUrl}/admin-super/subscriptions/allplans`, {
-          headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+        const { data } = await axios.get(
+          `${apiUrl}/admin-super/subscriptions/allplans`,
+          {
+            headers: {
+              Authorization: `Bearer ${superAdminToken}`,
+            },
           },
-        });
+        );
 
         if (data.success) {
           setPlans(data.plans);
@@ -160,6 +162,7 @@ const SubscriptionManagement = () => {
       if (data.success) {
         alert("User added successfully");
         setNewUser({ firstName: "", lastName: "", email: "", password: "" });
+        fetchUsers();
       }
     } catch (error) {
       console.error("Error adding user:", error);
@@ -310,7 +313,10 @@ const SubscriptionManagement = () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              toggleSubscriptionStatus(subscription.id, "Deactivated");
+                              toggleSubscriptionStatus(
+                                subscription.id,
+                                "Deactivated",
+                              );
                             }}
                             className="rounded-md bg-yellow-500 px-3 py-1 text-white transition duration-300 hover:bg-yellow-600"
                           >
@@ -319,7 +325,10 @@ const SubscriptionManagement = () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              toggleSubscriptionStatus(subscription.id, "Canceled");
+                              toggleSubscriptionStatus(
+                                subscription.id,
+                                "Canceled",
+                              );
                             }}
                             className="rounded-md bg-red-500 px-3 py-1 text-white transition duration-300 hover:bg-red-600"
                           >
@@ -388,13 +397,15 @@ const SubscriptionManagement = () => {
               </div>
               <div className="mb-4">
                 <span className="font-medium">Status:</span>{" "}
-                <span className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ml-2 ${
-                  selectedSubscription.status === "Active" 
-                    ? "bg-green-200 text-green-700"
-                    : selectedSubscription.status === "Deactivated"
-                    ? "bg-yellow-200 text-yellow-700" 
-                    : "bg-red-200 text-red-700"
-                }`}>
+                <span
+                  className={`ml-2 inline-block rounded-full px-3 py-1 text-sm font-semibold ${
+                    selectedSubscription.status === "Active"
+                      ? "bg-green-200 text-green-700"
+                      : selectedSubscription.status === "Deactivated"
+                      ? "bg-yellow-200 text-yellow-700"
+                      : "bg-red-200 text-red-700"
+                  }`}
+                >
                   {selectedSubscription.status}
                 </span>
               </div>
@@ -404,7 +415,10 @@ const SubscriptionManagement = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleSubscriptionStatus(selectedSubscription.id, "Deactivated");
+                        toggleSubscriptionStatus(
+                          selectedSubscription.id,
+                          "Deactivated",
+                        );
                         closeDetails();
                       }}
                       className="rounded-md bg-yellow-500 px-4 py-2 text-white transition duration-300 hover:bg-yellow-600"
@@ -414,7 +428,10 @@ const SubscriptionManagement = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleSubscriptionStatus(selectedSubscription.id, "Canceled");
+                        toggleSubscriptionStatus(
+                          selectedSubscription.id,
+                          "Canceled",
+                        );
                         closeDetails();
                       }}
                       className="rounded-md bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600"
@@ -426,7 +443,10 @@ const SubscriptionManagement = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleSubscriptionStatus(selectedSubscription.id, "Active");
+                      toggleSubscriptionStatus(
+                        selectedSubscription.id,
+                        "Active",
+                      );
                       closeDetails();
                     }}
                     className="rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"

@@ -62,71 +62,71 @@ export default function RootLayout({
     }
   }, []);
 
-  useEffect(() => {
-    const registerServiceWorker = async () => {
-      if ("serviceWorker" in navigator) {
-        try {
-          const registration = await navigator.serviceWorker.register(
-            "/sw2.js",
-            { scope: "/" },
-          );
-          console.log(
-            "Service Worker registered with scope:",
-            registration.scope,
-          );
+  // useEffect(() => {
+  //   const registerServiceWorker = async () => {
+  //     if ("serviceWorker" in navigator) {
+  //       try {
+  //         const registration = await navigator.serviceWorker.register(
+  //           "/sw2.js",
+  //           { scope: "/" },
+  //         );
+  //         console.log(
+  //           "Service Worker registered with scope:",
+  //           registration.scope,
+  //         );
 
-          // Request notification permission
-          const permission = await Notification.requestPermission();
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-            // Call your function to handle the subscription here, if needed
-            checkSubscription(registration);
-          } else {
-            console.error("Notification permission denied");
-          }
-        } catch (error) {
-          console.error("Service Worker registration failed:", error);
-        }
-      }
-    };
+  //         // Request notification permission
+  //         const permission = await Notification.requestPermission();
+  //         if (permission === "granted") {
+  //           console.log("Notification permission granted.");
+  //           // Call your function to handle the subscription here, if needed
+  //           checkSubscription(registration);
+  //         } else {
+  //           console.error("Notification permission denied");
+  //         }
+  //       } catch (error) {
+  //         console.error("Service Worker registration failed:", error);
+  //       }
+  //     }
+  //   };
 
-    registerServiceWorker();
-  }, []);
+  //   registerServiceWorker();
+  // }, []);
 
-  const checkSubscription = async (register) => {
-    const existingSubscription = await register.pushManager.getSubscription();
+  // const checkSubscription = async (register) => {
+  //   const existingSubscription = await register.pushManager.getSubscription();
 
-    if (existingSubscription) {
-      console.log("User is already subscribed:", existingSubscription);
-    } else {
-      subscribeUser(register);
-    }
-  };
+  //   if (existingSubscription) {
+  //     console.log("User is already subscribed:", existingSubscription);
+  //   } else {
+  //     subscribeUser(register);
+  //   }
+  // };
 
-  const subscribeUser = async (register) => {
-    const subscription = await register.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(publicKey),
-    });
+  // const subscribeUser = async (register) => {
+  //   const subscription = await register.pushManager.subscribe({
+  //     userVisibleOnly: true,
+  //     applicationServerKey: urlBase64ToUint8Array(publicKey),
+  //   });
 
-    // Send subscription to the server
-    await fetch(`${apiUrl}/subscribe`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(subscription),
-    });
-  };
+  //   // Send subscription to the server
+  //   await fetch(`${apiUrl}/subscribe`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(subscription),
+  //   });
+  // };
 
-  function urlBase64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-    const rawData: any = window.atob(base64);
-    return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
-  }
+  // function urlBase64ToUint8Array(base64String) {
+  //   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  //   const base64 = (base64String + padding)
+  //     .replace(/-/g, "+")
+  //     .replace(/_/g, "/");
+  //   const rawData: any = window.atob(base64);
+  //   return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
+  // }
 
   useEffect(() => {
     setProgress(20);
