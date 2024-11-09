@@ -513,7 +513,28 @@ const Sidebar = ({ role }) => {
           </svg>
         ),
         link: "/dashboard-main/subscribes-management",
-      },
+      }, 
+      {
+        name: "Packages Management",
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#ffffff"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 7.5h15c1.38 0 2.5 1.12 2.5 2.5v7c0 1.38-1.12 2.5-2.5 2.5H3c-1.38 0-2.5-1.12-2.5-2.5v-7c0-1.38 1.12-2.5 2.5-2.5zm2 3.5h8c.83 0 1.5-.67 1.5-1.5S13.83 8 13 8H5c-.83 0-1.5.67-1.5 1.5S4.17 11 5 11z"
+            />
+          </svg>
+        ),
+        link: "/dashboard-main/packages-management",
+      }
+      ,
     ],
   };
 

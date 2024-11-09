@@ -4,13 +4,21 @@ import { XCircle } from "lucide-react";
 import axios from "axios";
 import { apiUrl } from "@/lib/apiConfig";
 
+// Function to format dates
+const formatDate = (dateString: string) => {
+  if (!dateString) return "N/A";
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
 const SubscriptionManagement = () => {
-  const [subscriptions, setSubscriptions] = useState<any>([]);
-  const plans = [
-    { name: "Basic", price: 30 },
-    { name: "Premium", price: 90 },
-    { name: "Enterprice", price: 200 },
-  ];
+  const [subscriptions, setSubscriptions] = useState<any[]>([]);
+  const [plans, setPlans] = useState<any[]>([]);
   const [subscriptionsInput, setSubscriptionsInput] = useState<any>({
     id: "",
     packageName: "",
@@ -24,15 +32,19 @@ const SubscriptionManagement = () => {
     email: "",
     password: "",
   });
-  const handleSubscriptionClick = (subscription) => {
+
+  // Handle subscription click to view details
+  const handleSubscriptionClick = (subscription: any) => {
     setSelectedSubscription(subscription);
   };
 
+  // Close the subscription details modal
   const closeDetails = () => {
     setSelectedSubscription(null);
   };
 
-  const toggleSubscriptionStatus = (id, newStatus) => {
+  // Toggle subscription status
+  const toggleSubscriptionStatus = (id: string, newStatus: string) => {
     setSubscriptions(
       subscriptions.map((sub) =>
         sub.id === id ? { ...sub, status: newStatus } : sub,
@@ -40,10 +52,10 @@ const SubscriptionManagement = () => {
     );
   };
 
-  // fetchusers
-  const [users, setUsers] = useState<any>([]);
+  // Fetch users
+  const [users, setUsers] = useState<any[]>([]);
 
-  const fetechUsers = async () => {
+  const fetchUsers = async () => {
     try {
       const adminToken = localStorage.getItem("superAdminToken");
       const { data } = await axios.get(
@@ -56,13 +68,15 @@ const SubscriptionManagement = () => {
       );
       setUsers(data.users);
     } catch (error) {
-      console.error("Error fetching comments:", error);
+      console.error("Error fetching users:", error);
     }
   };
+
   useEffect(() => {
-    fetechUsers();
+    fetchUsers();
   }, []);
-  // fetch subs
+
+  // Fetch subscriptions
   const fetchAllSubs = async () => {
     const superAdminToken = localStorage.getItem("superAdminToken");
     if (!superAdminToken) {
@@ -72,8 +86,7 @@ const SubscriptionManagement = () => {
 
     try {
       const { data } = await axios.get(
-        `${apiUrl}/admin-super/userHandler/getAllSubscribers`, // Replace with your API endpoint
-
+        `${apiUrl}/admin-super/userHandler/getAllSubscribers`,
         {
           headers: {
             Authorization: `Bearer ${superAdminToken}`,
@@ -85,14 +98,46 @@ const SubscriptionManagement = () => {
         setSubscriptions(data.subscribers);
       }
     } catch (error) {
-      console.error("Error adding user:", error);
-      alert("An error occurred while adding the user.");
+      console.error("Error fetching subscriptions:", error);
+      alert("An error occurred while fetching subscriptions.");
     }
   };
+
   useEffect(() => {
     fetchAllSubs();
   }, []);
 
+  // Fetch all subscription plans
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const superAdminToken = localStorage.getItem("superAdminToken");
+        if (!superAdminToken) {
+          alert("You must be logged in as a Super Admin.");
+          return;
+        }
+
+        const { data } = await axios.get(`${apiUrl}/admin-super/subscriptions/allplans`, {
+          headers: {
+            Authorization: `Bearer ${superAdminToken}`,
+          },
+        });
+
+        if (data.success) {
+          setPlans(data.plans);
+        } else {
+          setPlans([]);
+        }
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+        alert("An error occurred while fetching plans.");
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
+  // Add a new subscriber
   const addSubscriber = async () => {
     console.log("Subscription Data:", subscriptionsInput);
     const superAdminToken = localStorage.getItem("superAdminToken");
@@ -103,7 +148,7 @@ const SubscriptionManagement = () => {
 
     try {
       const { data } = await axios.post(
-        `${apiUrl}/admin-super/userHandler/addNewSubscriber`, // Replace with your API endpoint
+        `${apiUrl}/admin-super/userHandler/addNewSubscriber`,
         subscriptionsInput,
         {
           headers: {
@@ -114,8 +159,6 @@ const SubscriptionManagement = () => {
 
       if (data.success) {
         alert("User added successfully");
-
-        // Optionally reset the form
         setNewUser({ firstName: "", lastName: "", email: "", password: "" });
       }
     } catch (error) {
@@ -124,21 +167,23 @@ const SubscriptionManagement = () => {
     }
   };
 
+  // Handle package change
   const handlePackageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.options[e.target.selectedIndex];
     const packageName = e.target.value;
     const price = selectedOption.getAttribute("data-package-price");
 
-    setSubscriptionsInput((prevState) => ({
+    setSubscriptionsInput((prevState: any) => ({
       ...prevState,
       packageName,
       price: Number(price) || "",
     }));
   };
 
+  // Handle email change
   const handleEmailChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
-    setSubscriptionsInput((prevState) => ({
+    setSubscriptionsInput((prevState: any) => ({
       ...prevState,
       id,
     }));
@@ -184,7 +229,7 @@ const SubscriptionManagement = () => {
                 <option value="">Select a Plan</option>
                 {plans.map((option) => (
                   <option
-                    key={option.name}
+                    key={option.id}
                     value={option.name}
                     data-package-price={option.price}
                   >
@@ -229,9 +274,6 @@ const SubscriptionManagement = () => {
                   <th className="border-b border-gray-300 px-4 py-2 text-left font-medium text-gray-600">
                     End Date
                   </th>
-                  {/* <th className="border-b border-gray-300 px-4 py-2 text-left font-medium text-gray-600">
-                    Status
-                  </th> */}
                   <th className="border-b border-gray-300 px-4 py-2 text-left font-medium text-gray-600">
                     Actions
                   </th>
@@ -257,36 +299,33 @@ const SubscriptionManagement = () => {
                       ${subscription.price.toFixed(2)}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
-                      {subscription.startDate}
+                      {formatDate(subscription.startDate)}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
-                      {subscription.endDate}
+                      {formatDate(subscription.endDate)}
                     </td>
-                    {/* <td className="border-b border-gray-300 px-4 py-2">
-                      <span
-                        className={`inline-block rounded-full px-2 py-1 text-sm font-semibold ${
-                          subscription.status === "Active"
-                            ? "bg-green-200 text-green-700"
-                            : "bg-red-200 text-red-700"
-                        }`}
-                      >
-                        {subscription.status}
-                      </span>
-                    </td> */}
                     <td className="flex space-x-2 border-b border-gray-300 px-4 py-2">
                       {subscription.status === "Active" ? (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleSubscriptionStatus(
-                              subscription.id,
-                              "Canceled",
-                            );
-                          }}
-                          className="rounded-md bg-red-500 px-3 py-1 text-white transition duration-300 hover:bg-red-600"
-                        >
-                          Cancel
-                        </button>
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleSubscriptionStatus(subscription.id, "Deactivated");
+                            }}
+                            className="rounded-md bg-yellow-500 px-3 py-1 text-white transition duration-300 hover:bg-yellow-600"
+                          >
+                            Deactivate
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleSubscriptionStatus(subscription.id, "Canceled");
+                            }}
+                            className="rounded-md bg-red-500 px-3 py-1 text-white transition duration-300 hover:bg-red-600"
+                          >
+                            Cancel
+                          </button>
+                        </>
                       ) : (
                         <button
                           onClick={(e) => {
@@ -317,7 +356,7 @@ const SubscriptionManagement = () => {
 
         {/* Subscription Details Modal */}
         {selectedSubscription && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-1/3 rounded-lg bg-white p-6 shadow-lg">
               <div className="flex justify-end">
                 <button onClick={closeDetails}>
@@ -341,39 +380,53 @@ const SubscriptionManagement = () => {
               </div>
               <div className="mb-2">
                 <span className="font-medium">Start Date:</span>{" "}
-                {selectedSubscription.startDate}
+                {formatDate(selectedSubscription.startDate)}
               </div>
               <div className="mb-2">
                 <span className="font-medium">End Date:</span>{" "}
-                {selectedSubscription.endDate}
+                {formatDate(selectedSubscription.endDate)}
               </div>
               <div className="mb-4">
                 <span className="font-medium">Status:</span>{" "}
-                {selectedSubscription.status}
+                <span className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ml-2 ${
+                  selectedSubscription.status === "Active" 
+                    ? "bg-green-200 text-green-700"
+                    : selectedSubscription.status === "Deactivated"
+                    ? "bg-yellow-200 text-yellow-700" 
+                    : "bg-red-200 text-red-700"
+                }`}>
+                  {selectedSubscription.status}
+                </span>
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-end space-x-2">
                 {selectedSubscription.status === "Active" ? (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleSubscriptionStatus(
-                        selectedSubscription.id,
-                        "Canceled",
-                      );
-                      closeDetails();
-                    }}
-                    className="rounded-md bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600"
-                  >
-                    Cancel Subscription
-                  </button>
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSubscriptionStatus(selectedSubscription.id, "Deactivated");
+                        closeDetails();
+                      }}
+                      className="rounded-md bg-yellow-500 px-4 py-2 text-white transition duration-300 hover:bg-yellow-600"
+                    >
+                      Deactivate
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSubscriptionStatus(selectedSubscription.id, "Canceled");
+                        closeDetails();
+                      }}
+                      className="rounded-md bg-red-500 px-4 py-2 text-white transition duration-300 hover:bg-red-600"
+                    >
+                      Cancel
+                    </button>
+                  </>
                 ) : (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleSubscriptionStatus(
-                        selectedSubscription.id,
-                        "Active",
-                      );
+                      toggleSubscriptionStatus(selectedSubscription.id, "Active");
                       closeDetails();
                     }}
                     className="rounded-md bg-green-500 px-4 py-2 text-white transition duration-300 hover:bg-green-600"
