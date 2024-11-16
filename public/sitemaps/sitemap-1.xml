@@ -259,4 +259,11 @@
       <changefreq>daily</changefreq>
       <priority>0.7</priority>
     </url>
+  
+    <url>
+      <loc>http://localhost:3000/blog/asdfa-sdf</loc>
+      <lastmod>2024-11-16T07:09:53.030Z</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.7</priority>
+    </url>
   </urlset>
