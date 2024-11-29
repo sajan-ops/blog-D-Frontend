@@ -153,7 +153,7 @@ const Posts: React.FC = () => {
                         >
                             <Link href={`/dashboard/${post.slug}`}>
                                 <img
-                                    src={getMediaUrlPath(JSON.parse(post.filePath)[0])}
+                                    src={getMediaUrlPath(post.filePath[0])}
                                     alt={post.title}
                                     className="mb-4 h-40 w-full rounded-md object-cover"
                                 />
